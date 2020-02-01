@@ -1,0 +1,310 @@
+/*resets all elements on the webpage.*/
+@import url('https://fonts.googleapis.com/css?family=Raleway:400|Yanone+Kaffeesatz:400,700');
+
+/*adds custom fonts from google fonts.*/
+/*Global Heading Tags CSS customisation for all heading tags.*/
+h1, h2 {
+  font-weight: 700;
+}
+
+h3, h4, h5 {
+  font-weight: 400;
+}
+
+h4, h5, p, a, .title-card {
+  font-family: 'Raleway', 'Arial', sans-serif;
+  /*Raleway from google fonts.*/
+}
+
+/*Global Header
+Customisation for all header elements.*/
+.heading {
+  font-family: 'Yanone Kaffeesatz', 'Arial', sans-serif;
+}
+
+#time {
+  float: left;
+  font-weight: 700;
+  font-size: 50px;
+}
+
+.chart-wrap {
+  margin-left: 50px;
+  font-family: sans-serif;
+  height: 650px;
+  width: 300px;
+}
+
+.chart-wrap.vertical .grid {
+  transform: translateY(-175px) translateX(175px) rotate(-90deg);
+}
+
+/*.chart-wrap.vertical .grid .bar::after {
+  transform: translateY(-50%) rotate(45deg);
+  display: block;
+}
+
+.chart-wrap.vertical .grid::before,
+.chart-wrap.vertical .grid::after {
+  transform: translateX(-0.2em) rotate(90deg);
+}*/
+
+.chart-wrap .grid {
+  position: relative;
+  padding: 5px 0 5px 0;
+  height: 100%;
+  width: 100%;
+  border-left: 2px solid #aaaaaa;
+  background: repeating-linear-gradient(90deg, transparent, transparent 19.5%, rgba(170, 170, 170, 0.7) 20%);
+}
+
+.chart-wrap .grid::before {
+  font-size: 0.8em;
+  font-weight: bold;
+  content: '0%';
+  position: absolute;
+  left: -0.5em;
+  top: -1.5em;
+}
+
+.chart-wrap .grid::after {
+  font-size: 0.8em;
+  font-weight: bold;
+  content: '100%';
+  position: absolute;
+  right: -1.5em;
+  top: -1.5em;
+}
+
+.chart-wrap .bar {
+  width: 30px;
+  margin: 30px 0;
+  background-color: #FF4C4C;
+  border-radius: 0 3px 3px 0;
+}
+
+.chart-wrap .bar:hover {
+  opacity: 0.7;
+}
+
+.chart-wrap .bar::after {
+  content: attr(data-name);
+  margin-left: 100%;
+  padding: 10px;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+
+/*Basic colour customisation for most of the webpages.*/
+html, header, section, main {
+  background-color: black;
+  color: white;
+  cursor: crosshair;
+}
+
+.card_colour {
+  background-color: red;
+}
+
+/*Pushes footer to bottom of page*/
+html, body {
+  height: 100%;
+}
+
+/* The grid container */
+.graph {
+  display: grid;
+  grid: repeat(10, auto) max-content / max-content repeat(5, auto);
+  /* ... */
+}
+
+/* A grid item */
+.graphBar {
+  height: 100%;
+  grid-row: 1 / -2;
+}
+
+/* A grid item */
+.graphBar {
+  /* Same as before */
+  background: palegoldenrod linear-gradient(to top, gold, transparent);
+}
+
+/* A grid item */
+.graphBar {
+  height: 100%;
+  grid-row: 1 / -2;
+  background: palegoldenrod linear-gradient(to top, gold, transparent);
+  width: 45px;
+  justify-self: center;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+/*Global Main Section
+Customisation for section class*/
+section {
+  padding: 20px 50px;
+}
+
+/*Applies to tablet sized screens and smaller. Decreases padding for section class.*/
+@media (max-width: 768px) {
+  section {
+    padding: 10px;
+  }
+}
+
+/*Navbar customisation (most of navbar code adapted from W3C). */
+.topnav {
+  overflow: hidden;
+  background-color: red;
+  padding: 0px 50px;
+  position: sticky;
+  top: 0;
+}
+
+/*Styling for links in navbar.*/
+.topnav a {
+  float: left;
+  color: white;
+  display: block;
+  text-align: center;
+  padding: 10px 15px;
+  text-decoration: none;
+}
+
+/*Styling for links in navbar on mouseover.*/
+.topnav a:hover {
+  background-color: black;
+  color: white;
+  text-decoration: none;
+  border-bottom: 5px solid white;
+  cursor: crosshair;
+}
+
+/*Highlights the current page in navbar.*/
+.active {
+  border-bottom: 5px solid black;
+  background-color: black;
+}
+
+/*By default, hides the menu toggler.*/
+.topnav .icon {
+  display: none;
+}
+
+/*When the screen is less than 768 pixels wide, hide all links and show toggler. The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally).*/
+@media screen and (max-width: 768px) {
+
+  /*Changes navbar padding.*/
+  .topnav {
+    padding: 10px 10px;
+  }
+
+  /*By default, hides the links.*/
+  .topnav a {
+    display: none;
+    padding: 15px;
+  }
+
+  /*Removes bottom border on mouseover.*/
+  .topnav a:hover {
+    border: none;
+  }
+
+  /*Positions the toggler.*/
+  .topnav a.icon {
+    float: left;
+    display: block;
+    background-color: black;
+  }
+
+  /*Sticks toggler icon to top of browser.*/
+  .topnav.responsive a.icon {
+    top: 0px;
+  }
+
+  /*Positions the links when menu is opened.*/
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+    border: none;
+  }
+}
+
+/*Global Button
+Customisation for all buttons*/
+.button {
+  background-color: red;
+  border: none;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-family: 'Raleway', 'Arial', sans-serif;
+  cursor: crosshair;
+}
+
+/*Applies on mouseover*/
+.button:hover {
+  background-color: black;
+  text-decoration: none;
+  color: white;
+}
+
+/*Responsiveness to images*/
+.fluid-ratio-resize {
+  max-width: 100%;
+  height: auto;
+  background-size: cover;
+  background-position: center;
+}
+
+/*Global Footer
+Customisation for footer class and its tags*/
+footer {
+  padding: 20px 50px;
+  background-color: red;
+  color: white;
+  flex-shrink: 0;
+}
+
+footer li a {
+  color: white;
+}
+
+footer li a:hover {
+  color: white;
+}
+
+#top-button {
+  background-color: black;
+}
+
+/*Applies to laptop sized screens and larger. Hides alternative footer.*/
+@media (min-width: 768px) {
+  .alt-footer {
+    display: none;
+  }
+}
+
+/*Applies to tablet sized screens and smaller. Hides normal footer and decreases padding for footer class.*/
+@media (max-width: 768px) {
+  .normal-footer {
+    display: none;
+  }
+
+  footer {
+    padding: 10px;
+  }
+}

@@ -14,6 +14,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.apiService.fetchLatestBlock();
+    // this.apiService.fetchLatestBlock();
   }
 }

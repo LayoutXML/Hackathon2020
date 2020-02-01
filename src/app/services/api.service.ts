@@ -1,17 +1,25 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy, OnInit} from '@angular/core';
 import {Block} from '../objects/block';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Constants} from '../utils/constants';
 import {Transaction} from '../objects/transaction';
+import {webSocket, WebSocketSubject} from 'rxjs/webSocket';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+export class ApiService implements OnDestroy {
 
   blocks: Block[] = [];
+  transactions: Transaction[] = [];
+  webSocket: WebSocketSubject<any> = webSocket('wss://ws.blockchain.info/inv');
 
   constructor(private httpClient: HttpClient) {
+    this.webSocket.next({op: 'unconfirmed_sub'});
+    this.webSocket.asObservable().subscribe(data => {
+      this.transactions.push(new Transaction(data.x.size, data.x.time));
+      console.log(data);
+    });
   }
 
   fetchLatestBlock() {
@@ -47,5 +55,9 @@ export class ApiService {
     });
     this.blocks.push(newBlock);
     console.log(newBlock);
+  }
+
+  ngOnDestroy(): void {
+    this.webSocket.unsubscribe();
   }
 }

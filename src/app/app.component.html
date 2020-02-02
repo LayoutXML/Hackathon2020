@@ -1,0 +1,15 @@
+<h1 class="text-center m-0">Bitcoin Live Transaction Data</h1>
+<h2 class="text-center m-0">{{ time | date: 'hh:mm:ss a' }}</h2>
+<h3 class="pb-1 text-center">Total Sum: {{totalSum}} Satoshis ({{totalSum / 1000000}} Bitcoins)</h3>
+<ngx-charts-bar-vertical
+  [view]="view"
+  [scheme]="colorScheme"
+  [results]="dataset"
+  [gradient]="gradient"
+  [xAxis]="false"
+  [yAxis]="showYAxis"
+  [showXAxisLabel]="false"
+  [showYAxisLabel]="showYAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  (select)="onSelect($event)">
+</ngx-charts-bar-vertical>

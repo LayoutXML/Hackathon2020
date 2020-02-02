@@ -1,4 +1,4 @@
-import {Injectable, OnDestroy, OnInit} from '@angular/core';
+import {EventEmitter, Injectable, OnDestroy, OnInit} from '@angular/core';
 import {Block} from '../objects/block';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Constants} from '../utils/constants';
@@ -11,14 +11,21 @@ import {webSocket, WebSocketSubject} from 'rxjs/webSocket';
 export class ApiService implements OnDestroy {
 
   blocks: Block[] = [];
-  transactions: Transaction[] = [];
+  transactions: EventEmitter<Transaction> = new EventEmitter<Transaction>();
   webSocket: WebSocketSubject<any> = webSocket('wss://ws.blockchain.info/inv');
+  currentTime = 0;
+  currentSum = 0;
 
   constructor(private httpClient: HttpClient) {
     this.webSocket.next({op: 'unconfirmed_sub'});
     this.webSocket.asObservable().subscribe(data => {
-      this.transactions.push(new Transaction(data.x.size, data.x.time));
-      console.log(data);
+      if (this.currentTime !== data.x.time) {
+        this.transactions.emit(new Transaction(this.currentSum, this.currentTime));
+        this.currentTime = data.x.time;
+        this.currentSum = data.x.size;
+      } else {
+        this.currentSum += data.x.size;
+      }
     });
   }
 

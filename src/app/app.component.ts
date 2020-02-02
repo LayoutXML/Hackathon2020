@@ -12,9 +12,15 @@ export class AppComponent implements OnInit {
 
   time: Date;
   totalSum = 0;
+  numberOfBars = 15;
+
+  displayTime;
+  displaySum;
+
+  exchangeRate;
 
   dataset = [];
-  view: any[] = [1900, 800];
+  view: any[] = [1900, 740];
   showYAxis = true;
   gradient = false;
   showYAxisLabel = true;
@@ -34,25 +40,21 @@ export class AppComponent implements OnInit {
       if (transaction.time !== 0) {
         this.dataset.push({name: transaction.time, value: transaction.size});
         this.totalSum += transaction.size;
-        if (this.dataset.length > 15) {
+        while (this.dataset.length > this.numberOfBars) {
           this.dataset.shift();
         }
         this.dataset = [...this.dataset];
       }
       this.time = new Date();
     });
+    this.apiService.exchangeRate.subscribe(rate => {
+      this.exchangeRate = rate;
+    });
   }
 
   onSelect(data): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-  }
-
-  onActivate(data): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
-  }
-
-  onDeactivate(data): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+    this.displayTime = data.name;
+    this.displaySum = data.value;
   }
 
 }

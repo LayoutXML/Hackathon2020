@@ -1,4 +1,8 @@
-h1, h2, h3 {
+h1, h2, h3, p, span, div {
   background-color: #000000;
   color: #ffffff;
+}
+
+.select-data {
+  padding-left: 5.5rem;
 }

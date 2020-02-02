@@ -1,6 +1,6 @@
 <h1 class="text-center m-0">Bitcoin Live Transaction Data</h1>
 <h2 class="text-center m-0">{{ time | date: 'hh:mm:ss a' }}</h2>
-<h3 class="pb-1 text-center">Total Sum: {{totalSum}} Satoshis ({{totalSum / 1000000}} Bitcoins)</h3>
+<h3 class="pb-2 text-center m-0">Total Sum: {{totalSum}} Satoshis ({{totalSum / 1000000}} Bitcoins)<span class="pl-5" *ngIf="exchangeRate">{{'Exchange rate: 1 Bitcoin = ' + exchangeRate + ' GBP'}}</span></h3>
 <ngx-charts-bar-vertical
   [view]="view"
   [scheme]="colorScheme"
@@ -13,3 +13,10 @@
   [yAxisLabel]="yAxisLabel"
   (select)="onSelect($event)">
 </ngx-charts-bar-vertical>
+<h3 class="m-0 select-data pb-1" *ngIf="!!displaySum">Selected Data</h3>
+<p class="m-0 select-data" *ngIf="!!displaySum">Time: {{displayTime * 1000 | date: 'HH:mm:ss'}}</p>
+<p class="m-0 select-data" *ngIf="!!displaySum">Value: {{displaySum}}</p>
+<p class="m-0 select-data pt-2"> Number of bars: {{numberOfBars}}</p>
+<div class="select-data">
+  <button class="btn btn-light mr-3" (click)="numberOfBars = numberOfBars + 1">Show More</button><button class="btn btn-light" (click)="numberOfBars = numberOfBars - 1">Show Less</button>
+</div>

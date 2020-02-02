@@ -4,6 +4,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Constants} from '../utils/constants';
 import {Transaction} from '../objects/transaction';
 import {webSocket, WebSocketSubject} from 'rxjs/webSocket';
+import {interval, Subscription} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,11 @@ export class ApiService implements OnDestroy {
 
   blocks: Block[] = [];
   transactions: EventEmitter<Transaction> = new EventEmitter<Transaction>();
-  webSocket: WebSocketSubject<any> = webSocket('wss://ws.blockchain.info/inv');
+  exchangeRate: EventEmitter<string> = new EventEmitter<string>();
+  webSocket: WebSocketSubject<any> = webSocket(Constants.WEBSOCKET);
   currentTime = 0;
   currentSum = 0;
+  subscription: Subscription;
 
   constructor(private httpClient: HttpClient) {
     this.webSocket.next({op: 'unconfirmed_sub'});
@@ -26,6 +29,15 @@ export class ApiService implements OnDestroy {
       } else {
         this.currentSum += data.x.size;
       }
+    });
+    this.fetchExchangeRate();
+    const source = interval(60000);
+    this.subscription = source.subscribe(val => this.fetchExchangeRate());
+  }
+
+  fetchExchangeRate() {
+    this.httpClient.get(Constants.EXCHANGE_RATE_URL).subscribe((rate: any) => {
+      this.exchangeRate.emit(rate.bpi.GBP.rate);
     });
   }
 
@@ -66,5 +78,6 @@ export class ApiService implements OnDestroy {
 
   ngOnDestroy(): void {
     this.webSocket.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }
